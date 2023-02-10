@@ -1,6 +1,6 @@
 </br>
 <p align="center">
-  <a href="https://github.com/arthur-pte/Clash-of-Code-Private-Replay/">
+  <a href="https://addons.mozilla.org/fr/firefox/addon/clash-of-code-private-replay/">
     <img src="assets/images/icon-128.png" alt="Logo">
   </a>
   <h3 align="center">Clash of Code Private Replay</h3>
@@ -27,7 +27,9 @@ If the drag and drop method did not work, you can proceed as follows:
 - Done!
 
 ## Mozilla Firefox
-Here are the steps to load the extension: 
+You can install it from the [addons page](https://addons.mozilla.org/fr/firefox/addon/clash-of-code-private-replay/) or manually.
+
+Here are the steps to load the extension manually: 
 - Go to `about:addons`. 
 - Select `Extensions` in the left pane.
 - Drag and drop the file `Firefox-COCPR.zip`.
