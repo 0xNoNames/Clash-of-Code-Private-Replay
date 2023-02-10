@@ -1,5 +1,6 @@
+</br>
 <p align="center">
-  <a href="/">
+  <a href="https://github.com/arthur-pte/Clash-of-Code-Private-Replay/">
     <img src="assets/images/icon-128.png" alt="Logo">
   </a>
   <h3 align="center">Clash of Code Private Replay</h3>
@@ -8,8 +9,6 @@
     A web browser extension that adds a button to restart private games of Clash of Code (codingame.com).
   </p>
 </p>
-
-<!-- ABOUT THE PROJECT -->
 
 # About The Project
 This browser extension adds a button that will allow you to restart a private game with the same settings as the previous one and invite the people who were in the private game.
