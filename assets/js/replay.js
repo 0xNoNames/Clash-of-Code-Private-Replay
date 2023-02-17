@@ -7,7 +7,7 @@ let userID;
 
 
 (async () => {
-    // Get the type of game (public/private), programming languages, modes and player IDs that participated in the game
+    // Get the type of game (public/private), programming languages, modes and IDs of the players who participated in the game
     const response = await fetch("https://www.codingame.com/services/ClashOfCode/findClashReportInfoByHandle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -21,16 +21,20 @@ let userID;
     programmingLanguages = data.programmingLanguages;
     modes = data.modes;
 
-    // Get current user's nickname
-    const userNickname = document.getElementsByClassName("nicknameText-0-2-69")[0].innerHTML.trim();
-    userID = data.players.find(obj => obj.codingamerNickname === userNickname).codingamerId;
-
-    data.players.forEach(player => {
-        // Do not add the current user to the list of players (so that he doesn't invite himself). 
-        if (player.codingamerId === userID)
-            return;
-        playersID.push(player.codingamerId);
-    });
+    // Get current user's ID and current players' ID
+    const getUserIdInterval = setInterval(() => {
+        const nicknameText = document.getElementsByClassName("nicknameText-0-2-69")[0];
+        if (nicknameText) {
+            const userNickname = nicknameText.innerHTML.trim();
+            userID = data.players.find(obj => obj.codingamerNickname === userNickname).codingamerId;
+            data.players.forEach(player => {
+                // Do not add the current user to the list of players (so that he doesn't invite himself)
+                if (player.codingamerId !== userID)
+                    playersID.push(player.codingamerId);
+            });
+            clearInterval(getUserIdInterval);
+        }
+    }, 100);
 })();
 
 
@@ -45,11 +49,11 @@ replayButton.style.cssText = `background-color: #f2bb13;color: #454c55; margin-l
 tagA.appendChild(replayButton);
 
 // Try to appendChild the DOM until it succeeds (sometimes the DOM is not fully loaded)
-const appendButton = setInterval(() => {
+const appendButtonInterval = setInterval(() => {
     try {
         const buttonContainer = document.querySelector(".button-container");
         buttonContainer.appendChild(tagA);
-        clearInterval(appendButton);
+        clearInterval(appendButtonInterval);
     } catch (error) {
         // Do nothing, just keep trying
     }
@@ -58,7 +62,7 @@ const appendButton = setInterval(() => {
 
 // Do the magic when the replay button is clicked
 tagA.addEventListener("click", async () => {
-    // Create a the new private game
+    // Create a new private game
     const response = await fetch("https://www.codingame.com/services/ClashOfCode/createPrivateClash", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,18 +72,14 @@ tagA.addEventListener("click", async () => {
     const data = await response.json();
 
     // Invite current players to the new private game
-    const invitePromises = playersID.map(playerID =>
+    for (const playerID of playersID) {
         fetch("https://www.codingame.com/services/ClashOfCode/inviteCodingamers", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify([userID, playerID, data.publicHandle])
-        })
-    );
+        });
+    }
 
-    await Promise.all(invitePromises);
-
-    // Wait for 200ms before relocating the user to the new game url
-    setTimeout(() => {
-        location = `https://www.codingame.com/clashofcode/clash/${data.publicHandle}`;
-    }, 200);
+    // Relocate the user to the new game url
+    location = `https://www.codingame.com/clashofcode/clash/${data.publicHandle}`;
 });
