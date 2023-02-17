@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Clash of Code Private Replay",
     "description": "Adds a button to restart private games of Clash of Code (codingame.com).",
-    "version": "1.0",
+    "version": "1.1",
     "background": {
         "service_worker": "assets/js/background.js"
     },
@@ -17,10 +17,5 @@
     ],
     "host_permissions": [
         "https://www.codingame.com/clashofcode/clash/report/*"
-    ],
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "{f2913b5f-5924-498f-bd0f-7f1070f64d57}"
-        }
-    }
+    ]
 }

@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Clash of Code Private Replay",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Adds a button to restart private games of Clash of Code (codingame.com).",
     "icons": {
         "16": "assets/images/icon-16.png",
