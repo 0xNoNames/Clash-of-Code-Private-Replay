@@ -68,14 +68,18 @@ tagA.addEventListener("click", async () => {
     const data = await response.json();
 
     // Invite current players to the new private game
-    for (const playerID of playersID) {
+    const invitePromises = playersID.map(playerID =>
         fetch("https://www.codingame.com/services/ClashOfCode/inviteCodingamers", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify([userID, playerID, data.publicHandle])
-        });
-    }
+        })
+    );
 
-    // Relocate the user to the new game url
-    location = `https://www.codingame.com/clashofcode/clash/${data.publicHandle}`;
+    await Promise.all(invitePromises);
+
+    // Wait for 200ms before relocating the user to the new game url
+    setTimeout(() => {
+        location = `https://www.codingame.com/clashofcode/clash/${data.publicHandle}`;
+    }, 200);
 });
